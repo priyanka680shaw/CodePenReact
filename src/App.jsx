@@ -19,7 +19,7 @@ const [isLoding , setIsLoding] = useState(true)
         if(userCredencial){
           console.log(userCredencial)
            setDoc(doc(db , "users", userCredencial?.uid) , userCredencial?.providerData[0] ).then((result)=>console.log(result))
-          navigate("/home/*")
+          navigate("/home/")
         }
         else{
           console.log("user not addded");
