@@ -13,6 +13,11 @@ import { javascript } from '@codemirror/lang-javascript';
 import { NavLink } from 'react-router-dom';
 import { logo } from '../../assets/Image';
 import { AnimatePresence } from 'framer-motion';
+import { useSelector } from 'react-redux';
+import { logOut } from '../../Utils/Helper.firebase';
+import { auth } from '../../Firebase/Firebase.confg';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../Redux/Slice/User.Reducer';
 const ProjectsCreate = () => {
   const [sizes, setSizes] = React.useState(['70%', '30%']);
   const [sizesCodePanel, setSizesCodePanel] = React.useState(['auto', 'auto', 'auto']);
@@ -23,6 +28,11 @@ const ProjectsCreate = () => {
   const [output, setOutput] = useState()
   const [isTitle, setIsTitle] = useState(true);
   const [titleValue, setTitleValue] = useState("Untitled");
+  //redux
+  const user = useSelector((state)=>state.userReducer?.user);
+  const dispatch = useDispatch();
+
+
   function updateOutput() {
     const displayOutput = `
     <html>
@@ -114,9 +124,59 @@ const ProjectsCreate = () => {
                 <motion.button  className='px-6 py-2 bg-primaryText cursor-pointer text-base text-white font-semibold rounded-md'>
                   Save
                 </motion.button>
-                <motion.div>
-                  <IoIosArrowDown className='text-white text-xl cursor-pointer'/>
-                </motion.div>
+                
+                {/* userlogin or sing in */}
+
+
+
+
+
+
+
+
+
+                {
+            !user && (
+              <motion.div whileTap={{ scale: 0.9 }}
+                className=' flex justify-center items-center '>
+                <NavLink to={"/home/auth"} className="whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
+                  Sing In
+                </NavLink>
+              </motion.div>
+            )
+          }
+
+
+          {/* userAuth not present true for login*/}
+          {
+            user && (
+              <div   className=' flex justify-center items-center gap-2'>
+              <motion.div whileTap={{ scale: 0.9 }}
+              >
+                <NavLink to={"/home/logiinPage"} className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
+                  {user[0]}
+                </NavLink>
+                
+              </motion.div>
+              <motion.div whileTap={{ scale: 0.9 }}
+              >
+              <NavLink to={"/home/auth"} className="whitespace-nowrap  bg-red-700 px-6 py-2 font-bold hover:bg-red-400 text-white  cuesor-pointer rounded" onClick={()=>{
+                logOut(auth);
+                dispatch(setUser(""));
+              }}>
+                  Log Out
+
+                </NavLink>
+              </motion.div>
+              </div>
+            )
+          }
+
+
+
+
+
+
               </div>
         </header>
  {/* ************************************* */}

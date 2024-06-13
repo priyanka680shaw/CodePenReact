@@ -10,6 +10,7 @@ import { singUpWithEmailAndPassword , singinWidthGoogle , singInWithGitHub} from
 
 
 const SingUP = () => {
+ 
 
   //email
   const [email, setEmail] = useState()
@@ -38,12 +39,13 @@ const SingUP = () => {
             {/* allert Section */}
             {/* login  button */}
             {
-              isLoggin ? <div className='cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-green-600 text-3xl text-white '>
+              isLoggin ? <div  className='cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-green-600 text-3xl text-white '>
                 <p className='text-white text-xl' onClick={()=>{
                   singUpWithEmailAndPassword(auth , email , password);
                   setEmail(" ");
                   setPassword(" ");
-                }}>Sing Up</p>
+                  setIsLoggin((pre)=>!pre)
+                }} >Sing Up</p>
               </div> : <div className=' cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-green-600 text-3xl text-white '>
                 <p className='text-white text-xl' >Log In</p>
               </div>

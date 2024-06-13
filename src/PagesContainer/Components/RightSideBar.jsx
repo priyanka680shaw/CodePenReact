@@ -3,12 +3,23 @@ import { FcSearch } from "react-icons/fc";
 import { NavLink, Route, Routes } from 'react-router-dom';
 import { motion } from "framer-motion"
 import { ProjectsHub, SingUP } from '../Pages/Index';
-
+import { useSelector } from 'react-redux';
+import { IoIosArrowDown } from "react-icons/io";
+import { auth } from '../../Firebase/Firebase.confg';
+import { logOut } from '../../Utils/Helper.firebase';
+import { setUser } from '../../Redux/Slice/User.Reducer';
+import { useDispatch } from 'react-redux';
 const RightSideBar = () => {
-  //user Auth
-  const [userAuth, setUserAuth] = useState(null);
+
+
+  //user to cheack ligin or not getting data from redux store
+  const dispatch = useDispatch();
+  const user = useSelector((state)=>state.userReducer?.user);
 
   return (
+
+    
+
     // complete div representataion (flex-1 : to occoupie the reamaning space in flex)
     <>
       <div className='flex-1 min-h-screen max-h-screen overflow-y-auto overflow-x-hidden h-full flex flex-col  px-4 md:px-4 py-4 md:py-12'>
@@ -24,7 +35,7 @@ const RightSideBar = () => {
 
           {/* userAuth not present false for ti Sig in */}
           {
-            !userAuth && (
+            !user && (
               <motion.div whileTap={{ scale: 0.9 }}
                 className=' flex justify-center items-center '>
                 <NavLink to={"/home/auth"} className="whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
@@ -35,13 +46,26 @@ const RightSideBar = () => {
           }
           {/* userAuth not present true for login*/}
           {
-            userAuth && (
+            user && (
+              <div   className=' flex justify-center items-center gap-2'>
               <motion.div whileTap={{ scale: 0.9 }}
-                className=' flex justify-center items-center '>
-                <NavLink to={"/home/logiinPage"} className="whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
-                  Log In
+              >
+                <NavLink to={"/home/logiinPage"} className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
+                  {user[0]}
+                </NavLink>
+                
+              </motion.div>
+              <motion.div whileTap={{ scale: 0.9 }}
+              >
+               <NavLink to={"/home/auth"} className="whitespace-nowrap  bg-red-700 px-6 py-2 font-bold hover:bg-red-400 text-white  cuesor-pointer rounded" onClick={()=>{
+                logOut(auth);
+                dispatch(setUser(""));
+              }}>
+                  Log Out
+
                 </NavLink>
               </motion.div>
+              </div>
             )
           }
         </div>

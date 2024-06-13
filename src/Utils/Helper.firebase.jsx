@@ -1,6 +1,6 @@
 import {  createUserWithEmailAndPassword } from "firebase/auth";
 //import { initializeApp } from "firebase/app";
-import { signInWithPopup, GoogleAuthProvider ,  GithubAuthProvider } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider ,  GithubAuthProvider , signOut } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.confg";
 
 
@@ -34,3 +34,15 @@ export async function singInWithGitHub(){
    console.log(err);
   }
 }
+
+//logout
+
+export async function logOut(auth){
+      try{
+         const logout = await signOut(auth)
+      console.log("logout" , logout)
+}
+catch(err){
+   console.log(err);
+}
+      }
