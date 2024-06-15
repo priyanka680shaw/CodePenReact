@@ -4,10 +4,12 @@ import { motion } from "framer-motion"
 import { logo } from '../../assets/Image/index';
 import { NavLink } from 'react-router-dom';
 import { useState } from "react";
+import { useSelector } from "react-redux";
 const LeftSideBar = () => {
     // state for sidebar click
     const [isSideMenu, setIsSideMenu] = useState(false);
-    const [isUser, setIsUser] = useState(['ll']);
+
+    const user = useSelector((state)=>state.userReducer.user)
     return (
         <>
 
@@ -35,9 +37,9 @@ const LeftSideBar = () => {
                         </div>
                     </NavLink>
                     {/* ********************************* */}
-                    {/* home nav if user exist then we need to show else not*/}
+                    {/* if user login  then we need to show home icon else not*/}
                     {
-                        isUser && (
+                        user && (
                             //all thre projects where user can see
                             <NavLink to={'/home/projectshub'}>
                                 <motion.div whileHover={{ scale: 1.2 }} className='flex items-center justify-center gap-2'>

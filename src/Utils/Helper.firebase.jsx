@@ -1,6 +1,6 @@
 import {  createUserWithEmailAndPassword } from "firebase/auth";
 //import { initializeApp } from "firebase/app";
-import { signInWithPopup, GoogleAuthProvider ,  GithubAuthProvider , signOut } from "firebase/auth";
+import { signInWithPopup, GoogleAuthProvider ,  GithubAuthProvider , signOut ,signInWithEmailAndPassword} from "firebase/auth";
 import { auth } from "../Firebase/Firebase.confg";
 
 
@@ -12,6 +12,18 @@ export async function singUpWithEmailAndPassword(auth , email , password){
    }
    catch(err){
     console.log(err);
+   }
+}
+
+//signInWithEmailAndPassword
+
+export async function singInWithEmailPassword(auth , email , password){
+   try{
+      const login = await signInWithEmailAndPassword(auth , email , password);
+      console.log("login" , login)
+   }
+   catch(err){
+      console.log(err)
    }
 }
 

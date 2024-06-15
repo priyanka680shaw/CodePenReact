@@ -51,7 +51,7 @@ const RightSideBar = () => {
               <motion.div whileTap={{ scale: 0.9 }}
               >
                 <NavLink to={"/home/logiinPage"} className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
-                  {user[0]}
+                  {user.email  || user.displayName}
                 </NavLink>
                 
               </motion.div>

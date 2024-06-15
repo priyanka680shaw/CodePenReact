@@ -6,12 +6,13 @@ import { MdOutlinePassword } from "react-icons/md";
 import { FcGoogle } from "react-icons/fc";
 import { VscGithub } from "react-icons/vsc";
 import { auth } from '../../Firebase/Firebase.confg';
-import { singUpWithEmailAndPassword , singinWidthGoogle , singInWithGitHub} from '../../Utils/Helper.firebase';
+import { singUpWithEmailAndPassword , singinWidthGoogle , singInWithGitHub , singInWithEmailPassword} from '../../Utils/Helper.firebase';
+import { useNavigate } from 'react-router-dom';
 
 
 const SingUP = () => {
  
-
+const navigateTo  =useNavigate()
   //email
   const [email, setEmail] = useState()
   const [password, setPassword] = useState()
@@ -39,14 +40,19 @@ const SingUP = () => {
             {/* allert Section */}
             {/* login  button */}
             {
-              isLoggin ? <div  className='cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-green-600 text-3xl text-white '>
-                <p className='text-white text-xl' onClick={()=>{
+              isLoggin ? <div  className='cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-green-600 text-3xl text-white ' onClick={()=>{
                   singUpWithEmailAndPassword(auth , email , password);
                   setEmail(" ");
                   setPassword(" ");
                   setIsLoggin((pre)=>!pre)
-                }} >Sing Up</p>
-              </div> : <div className=' cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-green-600 text-3xl text-white '>
+                }} >
+                <p className='text-white text-xl' >Sing Up</p>
+              </div> : <div className=' cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-green-600 text-3xl text-white ' onClick={()=>{
+                  singInWithEmailPassword(auth , email , password);
+                  setEmail(" ");
+                  setPassword(" ");
+                  navigateTo("/home/")
+                }} >
                 <p className='text-white text-xl' >Log In</p>
               </div>
             }

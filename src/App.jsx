@@ -28,11 +28,10 @@ const [isLoding , setIsLoding] = useState(true)
       const userExistance = onAuthStateChanged(auth , (userCredencial)=>{
         if(userCredencial){
           console.log(userCredencial)
-          // setDoc(doc(db , "users", userCredencial?.uid) , userCredencial?.providerData[0] ).then((result)=>console.log(result))
-          //addding ddata into redux store
-          dispatch(setUser(userCredencial.displayName))
+          setDoc(doc(db , "users", userCredencial?.uid) , userCredencial?.providerData[0] ).then((result)=>console.log(result))
+          // addding ddata into redux store
+          dispatch(setUser(userCredencial))
           navigate("/home")
-
         }
         else{
           console.log("user not addded");

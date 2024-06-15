@@ -26,7 +26,7 @@ const ProjectsCreate = () => {
   const [css, setCss] = useState("body{backgrooun : red}");
   const [js, setJs] = useState("console.log()");
   const [output, setOutput] = useState()
-  const [isTitle, setIsTitle] = useState(true);
+  const [isTitle, setIsTitle] = useState(false);
   const [titleValue, setTitleValue] = useState("Untitled");
   //redux
   const user = useSelector((state)=>state.userReducer?.user);
@@ -37,11 +37,11 @@ const ProjectsCreate = () => {
     const displayOutput = `
     <html>
     <head>
-    <style>${css}</style>
+       <style>${css}</style>
     </head>
     <body>
-    ${html}
-    <script src ={${js}}></script>
+         ${html}
+         <script>${js}</script>
     </body>
     </html>`
     setOutput(displayOutput);
@@ -154,7 +154,7 @@ const ProjectsCreate = () => {
               <motion.div whileTap={{ scale: 0.9 }}
               >
                 <NavLink to={"/home/logiinPage"} className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
-                  {user[0]}
+                  {user.email|| user.displayName}
                 </NavLink>
                 
               </motion.div>
