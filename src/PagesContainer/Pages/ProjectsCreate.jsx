@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import SplitPane, { Pane } from 'split-pane-react';
+import SplitPane from 'split-pane-react';
 import { motion } from 'framer-motion';
 import 'split-pane-react/esm/themes/default.css';
 import { TfiHtml5 } from "react-icons/tfi";
@@ -13,24 +13,24 @@ import { javascript } from '@codemirror/lang-javascript';
 import { NavLink } from 'react-router-dom';
 import { logo } from '../../assets/Image';
 import { AnimatePresence } from 'framer-motion';
-import { useSelector } from 'react-redux';
-import { logOut } from '../../Utils/Helper.firebase';
-import { auth } from '../../Firebase/Firebase.confg';
-import { useDispatch } from 'react-redux';
-import { setUser } from '../../Redux/Slice/User.Reducer';
+import { useSelector } from 'react-redux'; 
+import UserProfile from '../Components/UserProfile';
+import { doc, setDoc } from 'firebase/firestore';
+import { db } from '../../Firebase/Firebase.confg';
+import Alert from '../Components/Alert';
 const ProjectsCreate = () => {
   const [sizes, setSizes] = React.useState(['70%', '30%']);
   const [sizesCodePanel, setSizesCodePanel] = React.useState(['auto', 'auto', 'auto']);
   //displayn value in codepanal
-  const [html, setHtml] = useState("<!DOCTYPE html>");
-  const [css, setCss] = useState("body{backgrooun : red}");
-  const [js, setJs] = useState("console.log()");
+  const [html, setHtml] = useState(" ");
+  const [css, setCss] = useState(" ");
+  const [js, setJs] = useState(" ");
   const [output, setOutput] = useState()
   const [isTitle, setIsTitle] = useState(false);
   const [titleValue, setTitleValue] = useState("Untitled");
+  const [alert , setAlert] = useState(false);
   //redux
   const user = useSelector((state)=>state.userReducer?.user);
-  const dispatch = useDispatch();
 
 
   function updateOutput() {
@@ -41,15 +41,16 @@ const ProjectsCreate = () => {
     </head>
     <body>
          ${html}
-         <script>${js}</script>
+         <script>${js }</script>
     </body>
     </html>`
     setOutput(displayOutput);
   }
   // to call the output functiion
-  useEffect(() => {
-    updateOutput();
-  }, [html, css, js])
+useEffect(()=>{
+  updateOutput()
+} , [html , css , js])
+
   const layoutCSS = {
     height: '100%',
     display: 'flex',
@@ -57,16 +58,43 @@ const ProjectsCreate = () => {
     justifyContent: 'center',
   };
 
-  // function ssaveProgram(){
-  //       console.log("save")
-  // }
+  async function saveProgram(){
+        const id = `${Date.now()}`;
+        const _doc = {
+          id : id,
+          title : titleValue,
+          html: html,
+          css : css,
+          js : js,
+          output : output,
+          user : user
+        }
+        try{
+       await setDoc(doc(db , "projects" , id ) , _doc).then((res)=>{  setAlert(true) ;
+        console.log("projects add into  dbms" , res)
+       });
+      }
+      catch(err){
+        console.log(err)
+      }
+    
+      
+      setInterval(()=>{
+        setAlert(false);
+      } , 2000);
+  }
 
   return (
     <>
       {/* projects Main container */}
       <div className='flex justify-start items-start flex-col w-screen h-screen overflow-x-hidden'>
 
-
+        {/* Alert */}
+        <AnimatePresence className="">
+          {
+            alert && <Alert status = {"success"} alertMsg = {"Project Saved...!"}/> 
+          }
+        </AnimatePresence>
         {/* header */}
         <header className='px-12 py-4 w-full flex justify-between items-center'>
           {/* left  */}
@@ -121,20 +149,11 @@ const ProjectsCreate = () => {
           {/* right user Section */}
               <div className='flex justify-center items-center gap-3'>
                 {/* saveButton  onclick ={saveProgram}*/}
-                <motion.button  className='px-6 py-2 bg-primaryText cursor-pointer text-base text-white font-semibold rounded-md'>
+                <motion.button  className='px-6 py-2 bg-primaryText cursor-pointer text-base text-white font-semibold rounded-md' onClick={saveProgram}>
                   Save
                 </motion.button>
                 
                 {/* userlogin or sing in */}
-
-
-
-
-
-
-
-
-
                 {
             !user && (
               <motion.div whileTap={{ scale: 0.9 }}
@@ -150,33 +169,9 @@ const ProjectsCreate = () => {
           {/* userAuth not present true for login*/}
           {
             user && (
-              <div   className=' flex justify-center items-center gap-2'>
-              <motion.div whileTap={{ scale: 0.9 }}
-              >
-                <NavLink to={"/home/logiinPage"} className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
-                  {user.email|| user.displayName}
-                </NavLink>
-                
-              </motion.div>
-              <motion.div whileTap={{ scale: 0.9 }}
-              >
-              <NavLink to={"/home/auth"} className="whitespace-nowrap  bg-red-700 px-6 py-2 font-bold hover:bg-red-400 text-white  cuesor-pointer rounded" onClick={()=>{
-                logOut(auth);
-                dispatch(setUser(""));
-              }}>
-                  Log Out
-
-                </NavLink>
-              </motion.div>
-              </div>
+              <UserProfile/>
             )
           }
-
-
-
-
-
-
               </div>
         </header>
  {/* ************************************* */}
@@ -218,17 +213,18 @@ const ProjectsCreate = () => {
                       </div>
                     </div>
                     {/* codde written */}
-                    <div className='py-4 px-4 w-full'>
+                    <div className='py-2 px-4 w-full h-auto overflow-y-auto'>
                       {/* code mirror */}
                       <CodeMirror
                         value={html}
-                        height="600px"
+                        height="auto"
                         theme={aura}
                         extensions={[javascript({ jsx: true })]}
                         onChange={(value, viewUpdate) => {
                           console.log('value:', value);
                           setHtml(value)
                         }}
+                        
                       />
 
                     </div>
@@ -250,17 +246,18 @@ const ProjectsCreate = () => {
                       </div>
                     </div>
                     {/* codde written */}
-                    <div className='py-4 px-4 w-full'>
+                    <div className='py-2 px-4 w-full h-auto overflow-y-auto'>
                       {/* code mirror */}
                       <CodeMirror
                         value={css}
-                        height="600px"
+                        height="auto"
                         theme={aura}
                         extensions={[javascript({ jsx: true })]}
                         onChange={(value, viewUpdate) => {
                           console.log('value:', value);
                           setCss(value)
                         }}
+                        
                       />
 
                     </div>
@@ -282,17 +279,18 @@ const ProjectsCreate = () => {
                       </div>
                     </div>
                     {/* codde written */}
-                    <div className='py-2 px-4 w-full'>
+                    <div className='py-2 px-4 w-full h-auto overflow-y-auto'>
                       {/* code mirror */}
                       <CodeMirror
-                        value={js}
-                        height="600px"
+                        value= "console.log('Hello world');"
+                        height="auto"
                         theme={aura}
                         extensions={[javascript({ jsx: true })]}
                         onChange={(value, viewUpdate) => {
                           console.log('value:', value);
                           setJs(value)
                         }}
+                        
                       />
 
                     </div>
