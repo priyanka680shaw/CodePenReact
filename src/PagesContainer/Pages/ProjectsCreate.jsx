@@ -32,7 +32,6 @@ const ProjectsCreate = () => {
   //redux
   const user = useSelector((state)=>state.userReducer?.user);
 
-
   function updateOutput() {
     const displayOutput = `
     <html>
@@ -77,8 +76,6 @@ useEffect(()=>{
       catch(err){
         console.log(err)
       }
-    
-      
       setInterval(()=>{
         setAlert(false);
       } , 2000);

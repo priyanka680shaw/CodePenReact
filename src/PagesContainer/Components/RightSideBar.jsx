@@ -4,13 +4,19 @@ import { NavLink, Route, Routes } from 'react-router-dom';
 import { motion } from "framer-motion"
 import { ProjectsHub, SingUP } from '../Pages/Index';
 import { useSelector } from 'react-redux';
+import { useDispatch } from "react-redux";
 import UserProfile from "./UserProfile";
+import { setSearchTerms } from "../../Redux/Slice/Search.Reducer";
 const RightSideBar = () => {
   //user to cheack ligin or not getting data from redux store
  
   const user = useSelector((state) => state.userReducer?.user);
-  console.log("user" , user)
+  //console.log("user" , user)
+//filter search 
 
+const serachTerm = useSelector((state)=>state.searchReducer?.searchTerms ? state.searchReducer?.searchTerms : "")
+
+const dispatch = useDispatch()
   return (
 
     // complete div representataion (flex-1 : to occoupie the reamaning space in flex)
@@ -21,7 +27,9 @@ const RightSideBar = () => {
           {/* search Bar */}
           <div className='w-full bg-secondary  border-gray-400 px-4 py-1 flex justify-start items-center gap-3 rounded'>
             <FcSearch className='text-2xl' />
-            <input type='text' className='placeholder:text-gray-400 flex-1 px-4 py-1 text-xl bg-transparent text-primaryText outline-none border-none' placeholder='Search for Projects ...' />
+            <input type='text' className='placeholder:text-gray-400 flex-1 px-4 py-1 text-xl bg-transparent text-primaryText outline-none border-none' placeholder='Search for Project....'  value={serachTerm} onChange={(e)=>{
+              dispatch(setSearchTerms(e.target.value))
+            }}/>
           </div>
           {/* *********************** */}
           {/* user Profile SingIin or Login */}
@@ -52,8 +60,52 @@ const RightSideBar = () => {
 
 
         {/*************************************************************************/}
+
+
+
+
+
+
+
+     {/* middle of screen adding name of the user */}
+       
+     <div className='flex justify-center items-center'>
+      <div className='w-full flex justify-center items-center roundded-xl overflow-hidden cursor-pointer gap-2'>
+      {
+          user?.photoURL?(
+            <>
+              <div className="flex justify-center items-center flex-col">
+                <p className="text-white text-[50px]">Welcome to Codepen !</p>
+                <p className="text-white text-[40px] font-bold">{user.displayName}</p>
+              
+              <motion.img src={user?.photoURL} alt = {user?.displayName} referrerPolicy='no-refer' className='w-[100px]   rounded object-cover'/>
+              </div>
+            </>
+          ):<>
+          <p className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">{user?.email}</p>
+          
+          </>
+
+        }
+      </div>
+    </div> 
+
+
+
+
+
+
+
+
+
+
+
+
         {/* bottom Section  */}
-        <div className='w-full flex justify-center items-center flex-1'>
+        <div className='w-full flex justify-center  flex-1'>
+       
+
+       {/* ================================================== */}
           <Routes>
             {/* if ligin so redirect to the Projects Page */}
             <Route path='/projectshub' element={<ProjectsHub />} />
