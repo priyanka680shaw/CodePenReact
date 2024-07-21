@@ -10,6 +10,7 @@ const LeftSideBar = () => {
     const [isSideMenu, setIsSideMenu] = useState(false);
 
     const user = useSelector((state)=>state.userReducer.user)
+    console.log("leftSidebarPage" , user)
     return (
         <>
 

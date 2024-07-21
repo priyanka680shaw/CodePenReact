@@ -24,7 +24,7 @@ const [isLoding , setIsLoding] = useState(true)
  const navigate = useNavigate();
  //user Information
   useEffect(()=>{
-    // if user addded or adding the dats in to the firestore
+    // if user addded or adding the datas in to the firestore
       const userExistance = onAuthStateChanged(auth , (userCredencial)=>{
         if(userCredencial){
           //console.log("userCreadencial" , userCredencial)
@@ -50,7 +50,7 @@ const [isLoding , setIsLoding] = useState(true)
       })
       setInterval(()=>{
         setIsLoding(false)
-      },2000)
+      },2000) 
       return ()=> userExistance()
   } , [])
 

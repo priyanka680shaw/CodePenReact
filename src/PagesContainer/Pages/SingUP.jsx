@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
 import { logo } from '../../assets/Image'
 import { UserAuth } from '../Components/UserAuth'
 import { AiTwotoneMail } from "react-icons/ai";
@@ -7,11 +7,11 @@ import { FcGoogle } from "react-icons/fc";
 import { VscGithub } from "react-icons/vsc";
 import { auth } from '../../Firebase/Firebase.confg';
 import { singUpWithEmailAndPassword , singinWidthGoogle , singInWithGitHub , singInWithEmailPassword} from '../../Utils/Helper.firebase';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, NavLink, useNavigate } from 'react-router-dom';
 
 
 const SingUP = () => {
- 
+    
 const navigateTo  =useNavigate()
   //email
   const [email, setEmail] = useState()
@@ -24,8 +24,10 @@ const navigateTo  =useNavigate()
     <>
       <div className='w-full py-6 flex flex-col'>
         {/* logo Image  of codepen */}
-
-        <img src={logo} alt='CodePen' className='object-contain opacity-50 w-32 h-auto' />
+        {/* <NavLink to={}></NavLink> */}
+        <img src={logo} alt='CodePen' className='object-contain opacity-50 w-32 h-auto' onClick={()=>{
+          navigateTo("/home/")
+        }} />
 
         {/* Sing in Box  */}
         <div className='w-full flex flex-col items-center justify-center'>

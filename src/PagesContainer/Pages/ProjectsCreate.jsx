@@ -13,7 +13,7 @@ import { javascript } from '@codemirror/lang-javascript';
 import { NavLink } from 'react-router-dom';
 import { logo } from '../../assets/Image';
 import { AnimatePresence } from 'framer-motion';
-import { useSelector } from 'react-redux'; 
+import { useSelector } from 'react-redux';
 import UserProfile from '../Components/UserProfile';
 import { doc, setDoc } from 'firebase/firestore';
 import { db } from '../../Firebase/Firebase.confg';
@@ -21,16 +21,16 @@ import Alert from '../Components/Alert';
 const ProjectsCreate = () => {
   const [sizes, setSizes] = React.useState(['70%', '30%']);
   const [sizesCodePanel, setSizesCodePanel] = React.useState(['auto', 'auto', 'auto']);
-  //displayn value in codepanal
+  //display value in codepanal
   const [html, setHtml] = useState(" ");
   const [css, setCss] = useState(" ");
   const [js, setJs] = useState(" ");
   const [output, setOutput] = useState()
   const [isTitle, setIsTitle] = useState(false);
   const [titleValue, setTitleValue] = useState("Untitled");
-  const [alert , setAlert] = useState(false);
+  const [alert, setAlert] = useState(false);
   //redux
-  const user = useSelector((state)=>state.userReducer?.user);
+  const user = useSelector((state) => state.userReducer?.user);
 
   function updateOutput() {
     const displayOutput = `
@@ -40,15 +40,15 @@ const ProjectsCreate = () => {
     </head>
     <body>
          ${html}
-         <script>${js }</script>
+         <script>${js}</script>
     </body>
     </html>`
     setOutput(displayOutput);
   }
   // to call the output functiion
-useEffect(()=>{
-  updateOutput()
-} , [html , css , js])
+  useEffect(() => {
+    updateOutput()
+  }, [html, css, js])
 
   const layoutCSS = {
     height: '100%',
@@ -56,29 +56,30 @@ useEffect(()=>{
     alignItems: 'center',
     justifyContent: 'center',
   };
-
-  async function saveProgram(){
-        const id = `${Date.now()}`;
-        const _doc = {
-          id : id,
-          title : titleValue,
-          html: html,
-          css : css,
-          js : js,
-          output : output,
-          user : user
-        }
-        try{
-       await setDoc(doc(db , "projects" , id ) , _doc).then((res)=>{  setAlert(true) ;
-        console.log("projects add into  dbms" , res)
-       });
-      }
-      catch(err){
-        console.log(err)
-      }
-      setInterval(()=>{
-        setAlert(false);
-      } , 2000);
+//firebase data base 
+  async function saveProgram() {
+    const id = `${Date.now()}`;
+    const _doc = {
+      id: id,
+      title: titleValue,
+      html: html,
+      css: css,
+      js: js,
+      output: output,
+      user: user
+    }
+    try {
+      await setDoc(doc(db, "projects", id), _doc).then((res) => {
+        setAlert(true);
+        console.log("projects add into  dbms", res)
+      });
+    }
+    catch (err) {
+      console.log(err)
+    }
+    setInterval(() => {
+      setAlert(false);
+    }, 2000);
   }
 
   return (
@@ -89,7 +90,7 @@ useEffect(()=>{
         {/* Alert */}
         <AnimatePresence className="">
           {
-            alert && <Alert status = {"success"} alertMsg = {"Project Saved...!"}/> 
+            alert && <Alert status={"success"} alertMsg={"Project Saved...!"} />
           }
         </AnimatePresence>
         {/* header */}
@@ -102,76 +103,76 @@ useEffect(()=>{
             </NavLink>
             <div className='flex flex-col justify-start items-start'>
               {/* title */}
-           <div className='flex items-center gap-2 border-2 border-gray-800 p-2 shadow-md rounded'>
-           <AnimatePresence>
-                {
-                  isTitle ? <>
-                    <motion.input
-                      key={"titleInput"}
-                      type="text"
-                      placeholder='Your Title'
-                      value={titleValue}
-                      onChange={(e) => {
-                        setTitleValue(e.target.value);
-                      }}
-                      className='px-2  py-1 bg-gray-700 rounded-md border-2 border-red-900 text-white'
-                    />
-                  </> : <>
-                    <motion.div key={"titlelable"} className='px-2 py-1 text-white text-mdd w-[100px]  rounded-xl'>
-                      {titleValue}
-                    </motion.div>
-                  </>
-                }
-              </AnimatePresence>
-              {/* cheack box for ecddi  */}
-              <AnimatePresence>
-              {/* settitle or title state upddate */}
-                {
-                  isTitle ? <>
-                    <motion.div key={"checkButton"} className='' whileTap={{ scale: 0.9 }} onClick={() => { setIsTitle((pre) => !pre) }}>
-                      <p className='text-2xl cursor-pointer'>✅</p>
-                    </motion.div>
-                  </> : <>
-                  <motion.div key={"editButton"} className='' whileTap={{ scale: 0.9 }} onClick={() => { setIsTitle((pre) => !pre) }}>
-                      <p className='text-2xl cursor-pointer'>📝</p>
-                    </motion.div>
-                  </>
-                }
-              </AnimatePresence>
-           </div>
+              <div className='flex items-center gap-2 border-2 border-gray-800 p-2 shadow-md rounded'>
+                <AnimatePresence>
+                  {
+                    isTitle ? <>
+                      <motion.input
+                        key={"titleInput"}
+                        type="text"
+                        placeholder='Your Title'
+                        value={titleValue}
+                        onChange={(e) => {
+                          setTitleValue(e.target.value);
+                        }}
+                        className='px-2  py-1 bg-gray-700 rounded-md border-2 border-red-900 text-white'
+                      />
+                    </> : <>
+                      <motion.div key={"titlelable"} className='px-2 py-1 text-white text-mdd w-[100px]  rounded-xl'>
+                        {titleValue}
+                      </motion.div>
+                    </>
+                  }
+                </AnimatePresence>
+                {/* cheack box for ecddi  */}
+                <AnimatePresence>
+                  {/* settitle or title state upddate */}
+                  {
+                    isTitle ? <>
+                      <motion.div key={"checkButton"} className='' whileTap={{ scale: 0.9 }} onClick={() => { setIsTitle((pre) => !pre) }}>
+                        <p className='text-2xl cursor-pointer'>✅</p>
+                      </motion.div>
+                    </> : <>
+                      <motion.div key={"editButton"} className='' whileTap={{ scale: 0.9 }} onClick={() => { setIsTitle((pre) => !pre) }}>
+                        <p className='text-2xl cursor-pointer'>📝</p>
+                      </motion.div>
+                    </>
+                  }
+                </AnimatePresence>
+              </div>
 
               {/* follow */}
             </div>
           </div>
           {/* right user Section */}
-              <div className='flex justify-center items-center gap-3'>
-                {/* saveButton  onclick ={saveProgram}*/}
-                <motion.button  className='px-6 py-2 bg-primaryText cursor-pointer text-base text-white font-semibold rounded-md' onClick={saveProgram}>
-                  Save
-                </motion.button>
-                
-                {/* userlogin or sing in */}
-                {
-            !user && (
-              <motion.div whileTap={{ scale: 0.9 }}
-                className=' flex justify-center items-center '>
-                <NavLink to={"/home/auth"} className="whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
-                  Sing In
-                </NavLink>
-              </motion.div>
-            )
-          }
+          <div className='flex justify-center items-center gap-3'>
+            {/* saveButton  onclick ={saveProgram}*/}
+            <motion.button className='px-6 py-2 bg-primaryText cursor-pointer text-base text-white font-semibold rounded-md' onClick={saveProgram}>
+              Save
+            </motion.button>
+
+            {/* userlogin or sing in */}
+            {
+              !user && (
+                <motion.div whileTap={{ scale: 0.9 }}
+                  className=' flex justify-center items-center '>
+                  <NavLink to={"/home/auth"} className="whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">
+                    Sing In
+                  </NavLink>
+                </motion.div>
+              )
+            }
 
 
-          {/* userAuth not present true for login*/}
-          {
-            user && (
-              <UserProfile/>
-            )
-          }
-              </div>
+            {/* userAuth not present true for login*/}
+            {
+              user && (
+                <UserProfile />
+              )
+            }
+          </div>
         </header>
- {/* ************************************* */}
+        {/* ************************************* */}
         {/* alret */}
 
 
@@ -184,7 +185,7 @@ useEffect(()=>{
               sizes={sizes}
               onChange={setSizes}
             >
-            {/* top coding platte */}
+              {/* top coding platte */}
               <div style={{ ...layoutCSS, background: '#ddd' }}>
                 {/* adding code pltes */}
 
@@ -204,10 +205,10 @@ useEffect(()=>{
                         <p className='text-white'>HTML</p>
                       </div>
 
-                      <div className='left flex gap-2 items-center'>
+                      {/* <div className='left flex gap-2 items-center'>
                         <IoSettings className='text-white' />
                         <IoIosArrowDown className='text-white' />
-                      </div>
+                      </div> */}
                     </div>
                     {/* codde written */}
                     <div className='py-2 px-4 w-full h-auto overflow-y-auto'>
@@ -221,7 +222,7 @@ useEffect(()=>{
                           console.log('value:', value);
                           setHtml(value)
                         }}
-                        
+
                       />
 
                     </div>
@@ -237,10 +238,10 @@ useEffect(()=>{
                         <p className='text-white'>CSS</p>
                       </div>
 
-                      <div className='left flex gap-2 items-center'>
+                      {/* <div className='left flex gap-2 items-center'>
                         <IoSettings className='text-white' />
                         <IoIosArrowDown className='text-white' />
-                      </div>
+                      </div> */}
                     </div>
                     {/* codde written */}
                     <div className='py-2 px-4 w-full h-auto overflow-y-auto'>
@@ -254,7 +255,7 @@ useEffect(()=>{
                           console.log('value:', value);
                           setCss(value)
                         }}
-                        
+
                       />
 
                     </div>
@@ -270,16 +271,16 @@ useEffect(()=>{
                         <p className='text-white'>JS</p>
                       </div>
 
-                      <div className='left flex gap-2 items-center'>
+                      {/* <div className='left flex gap-2 items-center'>
                         <IoSettings className='text-white' />
                         <IoIosArrowDown className='text-white' />
-                      </div>
+                      </div> */}
                     </div>
                     {/* codde written */}
                     <div className='py-2 px-4 w-full h-auto overflow-y-auto'>
                       {/* code mirror */}
                       <CodeMirror
-                        value= "console.log('Hello world');"
+                        value="console.log('Hello world');"
                         height="auto"
                         theme={aura}
                         extensions={[javascript({ jsx: true })]}
@@ -287,7 +288,7 @@ useEffect(()=>{
                           console.log('value:', value);
                           setJs(value)
                         }}
-                        
+
                       />
 
                     </div>
@@ -298,7 +299,7 @@ useEffect(()=>{
 
 
               </div>
-            {/* ***************codinf Plate********************** */}
+              {/* ***************codinf Plate********************** */}
 
 
               {/* result bottom area */}
@@ -306,11 +307,11 @@ useEffect(()=>{
                 <iframe
                   title='Result'
                   srcDoc={output}
-                  style={{width : "100%" , height :"100%"}}
-                 
+                  style={{ width: "100%", height: "100%" }}
+
                 />
               </div>
- {/* **************result bottom*********************** */}
+              {/* **************result bottom*********************** */}
             </SplitPane>
           </div>
 
