@@ -2,7 +2,7 @@
 import { MdKeyboardDoubleArrowLeft, MdHome } from "react-icons/md";
 import { motion } from "framer-motion"
 import { logo } from '../../assets/Image/index';
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { useState } from "react";
 import { useSelector } from "react-redux";
 const LeftSideBar = () => {
@@ -10,6 +10,11 @@ const LeftSideBar = () => {
     const [isSideMenu, setIsSideMenu] = useState(false);
 
     const user = useSelector((state)=>state.userReducer.user)
+    const navigate = useNavigate();
+
+    const handleRoute =()=>{
+        navigate('/newProject')
+    }
     //console.log("leftSidebarPage" , user)
     return (
         <>
@@ -32,11 +37,11 @@ const LeftSideBar = () => {
                     </NavLink>
                     {/* ********************************* */}
                     {/* start coding  */}
-                    <NavLink to={'/newProject'}>
-                        <div className='border-2 border-gray-200 rounded-xl px-4 py-2 hover:border-gray-400'>
+                    {/* <NavLink to={'/newProject'}> */}
+                        <div onClick={handleRoute} className='border-2 border-gray-200 rounded-xl px-4 py-2 hover:border-gray-400'>
                             <p className='capitalize text-gray-200 hover:text-gray-400 text-center text-sm'>start coding</p>
                         </div>
-                    </NavLink>
+                    {/* </NavLink> */}
                     {/* ********************************* */}
                     {/* if user login  then we need to show home icon else not*/}
                     {
