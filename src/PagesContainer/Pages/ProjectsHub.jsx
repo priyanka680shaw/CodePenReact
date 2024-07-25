@@ -5,13 +5,17 @@ import { useSelector } from 'react-redux'
 const ProjectsHub = () => {
   const projects = useSelector((state) => state?.projectsReducer?.projects
   )
-
+console.log("projectHub projects" , projects)
   const [filtered , setFilter] = useState(null);
 //using tareniry operator iif true so 1irst wala else "";
 
 const serachTerm = useSelector((state)=>state.searchReducer?.searchTerms ? state.searchReducer?.searchTerms : "")
+
+console.log("projectHub" , serachTerm)
   useEffect(()=>{
-    if(serachTerm.length>0){
+
+    console.log("hello Project Hub Page is called")
+    if(serachTerm?.length>0){
      setFilter(
       projects?.filter((project)=>{
         const lowerCaseItem = project?.title.toLowerCase();
@@ -48,6 +52,7 @@ export default ProjectsHub
 // project Card
 export function ProjectCard({ index, project }) {
   const user = useSelector((state) => state.userReducer?.user);
+  //console.log("projects hub" , user)
   //const projects = useSelector((state) => state?.projectsReducer?.projects)
  // console.log("pprijjectHub", project)
   return (
@@ -69,7 +74,7 @@ export function ProjectCard({ index, project }) {
                 <p className="text-white text-2xl">{project.user?.displayName}</p>
               </>
             ) : <>
-              <p className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">{project.user?.email[0]}</p>
+              {/* <p className=" whitespace-nowrap  bg-emerald-500 px-6 py-2 font-bold hover:bg-emerald-700 text-white  cuesor-pointer rounded">piku  </p> */}
               <p className="text-white text-2xl">{project.user?.email}</p>
             </>
           }

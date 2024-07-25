@@ -23,7 +23,7 @@ const [singInDiaplay , setSingInDisplay] = useState(true)
   return (
     // complete div representataion (flex-1 : to occoupie the reamaning space in flex)
     <>
-      <div className='flex-1 min-h-screen max-h-screen overflow-y-auto overflow-x-hidden h-full flex flex-col  px-4 md:px-4 py-4 md:py-12'>
+      <div className='flex-1 min-h-screen max-h-screen overflow-y-scroll h-full flex flex-col  px-4 md:px-4 py-4 md:py-12'>
         {/* top section start from here */}
         <div className={`flex justify-center items-center gap-3 w-full h-screen ${user && "h-[auto]"}`}>
           {/* search Bar */}
@@ -96,9 +96,13 @@ const [singInDiaplay , setSingInDisplay] = useState(true)
 
 
         {/* bottom Section  */}
-        <div className='w-full flex justify-center  flex-1'>
+        <div className='w-full flex justify-center mb-4  flex-1'>
        
-
+            {
+              user && <div className="h-screen overflow-y-scroll mb-4">
+              <ProjectsHub/>
+              </div>
+            }
        {/* ================================================== */}
           <Routes>
             {/* if ligin so redirect to the Projects Page */}

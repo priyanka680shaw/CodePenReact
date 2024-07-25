@@ -10,7 +10,7 @@ const LeftSideBar = () => {
     const [isSideMenu, setIsSideMenu] = useState(false);
 
     const user = useSelector((state)=>state.userReducer.user)
-    console.log("leftSidebarPage" , user)
+    //console.log("leftSidebarPage" , user)
     return (
         <>
 
@@ -42,7 +42,7 @@ const LeftSideBar = () => {
                     {
                         user && (
                             //all thre projects where user can see
-                            <NavLink to={'/home/projectshub'}>
+                            <NavLink to={'/home'}>
                                 <motion.div whileHover={{ scale: 1.2 }} className='flex items-center justify-center gap-2'>
                                     <MdHome className='text-primaryText text-xl' />
                                     <motion.p whileHover={{ color: 'green' }} className='text-lg text-primaryText'>Home</motion.p>

@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <>
     {/* left sideBar */}
-    <div className='flex min-h-screen'>
+    <div className='flex min-h-screen overflow-hidden'>
             <LeftSideBar/>
      
     {/* Right Sidde Bar */}

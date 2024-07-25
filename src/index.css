@@ -8,3 +8,7 @@ body{
     background: #131417;
     font-family: 'poppins' , sans-serif;
 }
+
+::-webkit-scrollbar{
+    display: none;
+}

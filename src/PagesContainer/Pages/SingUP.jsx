@@ -53,7 +53,7 @@ const navigateTo  =useNavigate()
                   singInWithEmailPassword(auth , email , password);
                   setEmail(" ");
                   setPassword(" ");
-                  navigateTo("/home/")
+                  navigateTo("/home/projectshub")
                 }} >
                 <p className='text-white text-xl' >Log In</p>
               </div>
@@ -68,33 +68,35 @@ const navigateTo  =useNavigate()
                   setIsLoggin((pre)=>!pre);
                 }}>Create here</span></p>
             }
-            {/* or  linr section */}
+            {/* or  lin section */}
             <div className='flex justify-center items-center gap-6'>
             <div className='h-[1px] w-24 rounded-md bg-gray-400'></div>
               <p className='text-sm text-primaryText'>OR</p>
               <div className='h-[1px] w-24 rounded-md bg-gray-400'></div>
             </div>
             {/* sing in with google */}
-            <div onClick = {singinWidthGoogle} className='cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-gray-600 text-xl text-white '>
+            <div onClick = {()=>{
+              singinWidthGoogle()
+            }} className='cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-gray-600 text-xl text-white '>
             <FcGoogle className='text-3xl'/>
             <div >
                 <p>Sing in with Google</p>
             </div>
             </div>
             {/* or section */}
-            <div className='flex justify-center items-center gap-6'>
+            {/* <div className='flex justify-center items-center gap-6'>
             <div className='h-[1px] w-24 rounded-md bg-gray-400'></div>
               <p className='text-sm text-primaryText'>OR</p>
               <div className='h-[1px] w-24 rounded-md bg-gray-400'></div>
-            </div>
+            </div> */}
             {/* sing in with github */}
-            <div onClick={singInWithGitHub}
+            {/* <div onClick={singInWithGitHub}
             className='cursor-pointer flex justify-center items-center gap-3 w-full md:w-96 rounded-md px-4 py-1 bg-gray-600 text-xl text-white '>
             <VscGithub className='text-3xl text-purple-500'/>
             <div >
                 <p>Sing in with Github</p>
             </div>
-            </div>
+            </div> */}
           </div>
 
         </div>

@@ -29,9 +29,11 @@ const ProjectsCreate = () => {
   const [isTitle, setIsTitle] = useState(false);
   const [titleValue, setTitleValue] = useState("Untitled");
   const [alert, setAlert] = useState(false);
+
   //redux
   const user = useSelector((state) => state.userReducer?.user);
 
+  //console.log("prooject creatre" , user)
   function updateOutput() {
     const displayOutput = `
     <html>
@@ -88,15 +90,19 @@ const ProjectsCreate = () => {
       <div className='flex justify-start items-start flex-col w-screen h-screen overflow-x-hidden'>
 
         {/* Alert */}
-        <AnimatePresence className="">
+        {
+          user ?<AnimatePresence className="">
           {
             alert && <Alert status={"success"} alertMsg={"Project Saved...!"} />
           }
         </AnimatePresence>
+        : <h1>Login / Sign Please</h1>
+        }
+        
         {/* header */}
         <header className='px-12 py-4 w-full flex justify-between items-center'>
           {/* left  */}
-          <div className='flex justify-center items-center gap-6'>
+          <div className='flex justify-center items-center '>
             {/* logo redirect to projects*/}
             <NavLink to="/home/*">
               <img src={logo} alt='codepenLogo' className='w-32 h-auto boject-contain' />
@@ -147,9 +153,11 @@ const ProjectsCreate = () => {
           {/* right user Section */}
           <div className='flex justify-center items-center gap-3'>
             {/* saveButton  onclick ={saveProgram}*/}
-            <motion.button className='px-6 py-2 bg-primaryText cursor-pointer text-base text-white font-semibold rounded-md' onClick={saveProgram}>
+           {
+            user &&  <motion.button className='px-6 py-2 bg-primaryText cursor-pointer text-base text-white font-semibold rounded-md' onClick={saveProgram}>
               Save
             </motion.button>
+           }
 
             {/* userlogin or sing in */}
             {
@@ -280,7 +288,7 @@ const ProjectsCreate = () => {
                     <div className='py-2 px-4 w-full h-auto overflow-y-auto'>
                       {/* code mirror */}
                       <CodeMirror
-                        value="console.log('Hello world');"
+                        value= {js}
                         height="auto"
                         theme={aura}
                         extensions={[javascript({ jsx: true })]}
