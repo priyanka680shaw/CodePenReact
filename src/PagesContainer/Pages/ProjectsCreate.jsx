@@ -91,12 +91,12 @@ const ProjectsCreate = () => {
 
         {/* Alert */}
         {
-          user ?<AnimatePresence className="">
+          user && <AnimatePresence className="">
           {
             alert && <Alert status={"success"} alertMsg={"Project Saved...!"} />
           }
         </AnimatePresence>
-        : <h1>Login / Sign Please</h1>
+        
         }
         
         {/* header */}

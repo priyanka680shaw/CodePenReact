@@ -53,6 +53,14 @@ const navigateTo  =useNavigate()
                   singInWithEmailPassword(auth , email , password);
                   setEmail(" ");
                   setPassword(" ");
+                  if(email ==  " "){
+                    alert("enter the valid email");
+                    return
+                  }
+                  if(password.length < 6){
+                    alert("addd Minimum Six character");
+                    return
+                  }
                   navigateTo("/home/projectshub")
                 }} >
                 <p className='text-white text-xl' >Log In</p>
